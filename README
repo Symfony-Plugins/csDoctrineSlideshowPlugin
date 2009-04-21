@@ -1,0 +1,77 @@
+csDoctrineSlideshowPlugin
+=================================
+
+This plugin is for Doctrine only.  It provides a Slideshow and Slide object for easy slideshow integration.  The javascript
+library incorporated into this plugin is jQuery Cycle.
+
+How It Works
+------------
+
+Configure your slideshow defaults:
+
+	[yml]
+	app:
+	  slideshow:
+	  	controls:   on
+	  	speed:      fast
+	  	timeout:    5000
+	  	images:
+	  		back:     '/csDoctrineSlideshowPlugin/images/controller-back.png'
+	  		pause:    '/csDoctrineSlideshowPlugin/images/controller-pause.png'
+	  		play:     '/csDoctrineSlideshowPlugin/images/controller-play.png'
+	  		next:     '/csDoctrineSlideshowPlugin/images/controller-forward.png'
+
+if you want anything different, you can override these settings in your app.yml
+
+Create a slideshow record in the database.
+
+Each slideshow object represents a different instance of a slideshow.  You can configure the width and height of your
+slideshow, control the speed, timeout, and effect.  The available effects are: 
+
+* blindX
+* growX
+* scrollLeft
+* zoom
+* fade
+* turnLeft
+* turnDown
+* curtainX
+* scrollRight
+
+Slides are added to each slideshow, and contain fields image, title, description, caption etc.  All of these gracefully degrade,
+so what is not needed can simply be ignored.
+
+Finally, to include your slideshow, simply include the csSlideshow module in your settings.yml, and then add the component call to your view:
+
+	[php]
+	<?php include_component('slideshow', 'slideshow', array()) ?>
+
+By default, the component pulls all slides.  If you are targeting a specific slideshow, send the id of the desired slideshow to the component:
+
+	[php]
+	<?php include_component('slideshow', 'slideshow', array('id' => 3)) ?>
+				
+If you already have your slideshow object instance, you can pass that as well:
+
+	[php]
+	<?php include_component('slideshow', 'slideshow', array('slideshow' => $slideshow)) ?>
+
+Likewise, if you have a custom group of slides you'd rather the slideshow use, you can send that as well:
+
+	[php]
+	//For use of default slideshow parameters with custom slides
+	<?php include_component('slideshow', 'slideshow', array('slides' => $slides)) ?>
+	//For using a specific slideshow parameters with custom slides
+	<?php include_component('slideshow', 'slideshow', array('slideshow' => $slideshow, 'slides' => $slides)) ?>
+
+###Notes
+* All slides are ordered with the most recent ones first.  Use the csDoctrineActAsSortable plugin to allow granular sortiing.
+* All slideshow images are hashed and saved in the uploads/slideshow directory.  To change this, override the getUploadPath() method
+in your Slide.class.php 
+* Javascripts/Styles are automatically included in your component, so editing of your view.yml is not necessary
+
+Please contact bshaffer@centresource.com for any comments or questions
+
+### Todo:
+	
+add the ability to use different slideshow libraries, namely google's slideshow plugin, which is incredible: http://code.google.com/p/slideshow/

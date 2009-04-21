@@ -1,0 +1,36 @@
+Slideshow:
+  actAs: [Timestampable]
+  columns:
+    name: string(255)
+    width: string(255)
+    height: string(255)
+    timeout:
+      default:  5000  
+      type: integer
+    fx:
+      default:  fade
+      type: enum
+      values: [blindX, growX, scrollLeft, zoom, fade, turnLeft, turnDown, curtainX, scrollRight]
+    speed:
+      default:  fast
+      type: enum
+      values: [slow, medium, fast]
+
+Slide:
+  actAs: [Timestampable]
+  columns:
+    slideshow_id:
+      type:   integer
+    image:  
+      type:   string(255)
+    title:    
+      type:   string(255)
+    description:  
+      type:   clob
+    url: 
+      type:   string(255)
+    caption:
+      type:   clob  
+  relations:
+    Slideshow:
+      foreignAlias:  Slides
