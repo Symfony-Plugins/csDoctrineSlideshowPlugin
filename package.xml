@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.6" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>csDoctrineSlideshowPlugin</name>
+ <channel>plugins.symfony-project.org</channel>
+ <summary>A plugin that adds auto-population of latitude and longitude fields and useful geolocating functions to model</summary>
+ <description>
+		Configure your plugin using only YAML to pull latitude and longitude 
+		information using the Google API.  Specify the fields on your model 
+		you want to use to retrieve the latitude and longitude, add a Google API key, 
+		and the plugin will do the rest.  Supports radius searches in miles and
+ 	  kilometers.
+ </description>
+ <lead>
+  <name>Brent Shaffer</name>
+  <user>bshaffer</user>
+  <email>bshaffer@centresource.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-04-24</date>
+ <time>15:54:35</time>
+ <version>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.symfony-project.org/license">MIT license</license>
+ <notes>-</notes>
+ <contents>
+  <dir name="/">
+   <file role="data" name="README" />
+   <file role="data" name="LICENSE" />
+   <dir name="config">
+   	<dir name="doctrine">
+			<file role="data" name="slideshow.yml" />
+    </dir>
+   </dir>
+   <dir name="lib">
+		<dir name="filter">	
+			<dir name="doctrine">
+     		<file role="data" name="PluginSlideshowFormFilter.class.php" />
+     		<file role="data" name="PluginSlideFormFilter.class.php" />
+    	</dir>
+    </dir>
+		<dir name="form">	
+			<dir name="doctrine">
+     		<file role="data" name="PluginSlideshowForm.class.php" />
+     		<file role="data" name="PluginSlideForm.class.php" />
+    	</dir>
+    </dir>
+		<dir name="model">	
+			<dir name="doctrine">
+				<file role="data" name="PluginSlide.class.php" />
+     		<file role="data" name="PluginSlideshowTable.class.php" />
+     		<file role="data" name="PluginSlideshow.class.php" />
+     		<file role="data" name="PluginSlideTable.class.php" />
+    	</dir>
+    </dir>
+   </dir>
+  </dir>
+  <dir name="modules">
+   <!-- model classes -->
+  	<dir name="csSlideshow">
+   		<dir name="actions">
+				<file role="data" name="components.class.php" />
+			</dir>
+   		<dir name="templates">
+				<file role="data" name="_slide.php" />
+				<file role="data" name="_slideshow.php" />
+				<file role="data" name="_slideshow_js.php" />
+			</dir>			
+		</dir>
+  </dir>
+  <dir name="web">
+		<dir name="images">
+			<file role="data" name="controller-back-over.gif" />
+			<file role="data" name="controller-back.gif" />
+			<file role="data" name="controller-back.png" />
+			<file role="data" name="controller-forward-over.gif" />
+			<file role="data" name="controller-forward.gif" />
+			<file role="data" name="controller-forward.png" />
+			<file role="data" name="controller-over-back.gif" />
+			<file role="data" name="controller-pause-over.gif" />
+			<file role="data" name="controller-pause.gif" />
+			<file role="data" name="controller-pause.png" />
+			<file role="data" name="controller-play-over.gif" />
+			<file role="data" name="controller-play.gif" />
+			<file role="data" name="controller-play.png" />			
+		</dir>
+  	<dir name="js">
+			<file role="data" name="jquery.cycle.all.min.js" />
+		</dir>		
+	</dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.1.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.1</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.1.0</min>
+    <max>1.2.0</max>
+    <exclude>1.2.0</exclude>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-04-24</date>
+   <license uri="http://www.symfony-project.org/license">MIT license</license>
+   <notes>
+   * Initial creation of plugin
+   </notes>
+  </release>
+ </changelog>
+</package>
