@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package packagerversion="1.4.6" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>csDoctrineSlideshowPlugin</name>
- <channel>plugins.symfony-project.org</channel>
+ <channel>pear.symfony-project.com</channel>
  <summary>Quickly implement slideshows into your project</summary>
  <description>
  	Adds easily-configurable jquery-cycle powered slideshows into your project.  Slideshows can be configured entirely in the backend
@@ -55,40 +55,40 @@
     	</dir>
     </dir>
    </dir>
-  </dir>
-  <dir name="modules">
-   <!-- model classes -->
-  	<dir name="csSlideshow">
-   		<dir name="actions">
-				<file role="data" name="components.class.php" />
+	  <dir name="modules">
+	   <!-- model classes -->
+	  	<dir name="csSlideshow">
+	   		<dir name="actions">
+					<file role="data" name="components.class.php" />
+				</dir>
+	   		<dir name="templates">
+					<file role="data" name="_slide.php" />
+					<file role="data" name="_slideshow.php" />
+					<file role="data" name="_slideshow_js.php" />
+				</dir>			
 			</dir>
-   		<dir name="templates">
-				<file role="data" name="_slide.php" />
-				<file role="data" name="_slideshow.php" />
-				<file role="data" name="_slideshow_js.php" />
-			</dir>			
+	  </dir>
+	  <dir name="web">
+			<dir name="images">
+				<file role="data" name="controller-back-over.gif" />
+				<file role="data" name="controller-back.gif" />
+				<file role="data" name="controller-back.png" />
+				<file role="data" name="controller-forward-over.gif" />
+				<file role="data" name="controller-forward.gif" />
+				<file role="data" name="controller-forward.png" />
+				<file role="data" name="controller-over-back.gif" />
+				<file role="data" name="controller-pause-over.gif" />
+				<file role="data" name="controller-pause.gif" />
+				<file role="data" name="controller-pause.png" />
+				<file role="data" name="controller-play-over.gif" />
+				<file role="data" name="controller-play.gif" />
+				<file role="data" name="controller-play.png" />			
+			</dir>
+	  	<dir name="js">
+				<file role="data" name="jquery.cycle.all.min.js" />
+			</dir>		
 		</dir>
   </dir>
-  <dir name="web">
-		<dir name="images">
-			<file role="data" name="controller-back-over.gif" />
-			<file role="data" name="controller-back.gif" />
-			<file role="data" name="controller-back.png" />
-			<file role="data" name="controller-forward-over.gif" />
-			<file role="data" name="controller-forward.gif" />
-			<file role="data" name="controller-forward.png" />
-			<file role="data" name="controller-over-back.gif" />
-			<file role="data" name="controller-pause-over.gif" />
-			<file role="data" name="controller-pause.gif" />
-			<file role="data" name="controller-pause.png" />
-			<file role="data" name="controller-play-over.gif" />
-			<file role="data" name="controller-play.gif" />
-			<file role="data" name="controller-play.png" />			
-		</dir>
-  	<dir name="js">
-			<file role="data" name="jquery.cycle.all.min.js" />
-		</dir>		
-	</dir>
  </contents>
  <dependencies>
   <required>
