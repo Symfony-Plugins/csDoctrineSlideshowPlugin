@@ -2,13 +2,9 @@
 <package packagerversion="1.4.6" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>csDoctrineSlideshowPlugin</name>
  <channel>plugins.symfony-project.org</channel>
- <summary>A plugin that adds auto-population of latitude and longitude fields and useful geolocating functions to model</summary>
+ <summary>Quickly implement slideshows into your project</summary>
  <description>
-		Configure your plugin using only YAML to pull latitude and longitude 
-		information using the Google API.  Specify the fields on your model 
-		you want to use to retrieve the latitude and longitude, add a Google API key, 
-		and the plugin will do the rest.  Supports radius searches in miles and
- 	  kilometers.
+ 	Adds easily-configurable jquery-cycle powered slideshows into your project.  Slideshows can be configured entirely in the backend
  </description>
  <lead>
   <name>Brent Shaffer</name>
