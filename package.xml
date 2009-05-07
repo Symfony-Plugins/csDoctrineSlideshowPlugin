@@ -12,10 +12,10 @@
   <email>bshaffer@centresource.com</email>
   <active>yes</active>
  </lead>
- <date>2009-04-24</date>
+ <date>2009-05-07</date>
  <time>15:54:35</time>
  <version>
-  <release>1.0.0</release>
+  <release>1.0.1</release>
   <api>1.0.0</api>
  </version>
  <stability>
@@ -69,19 +69,13 @@
 			</dir>
 	  </dir>
 	  <dir name="web">
+	  	<dir name="css">
+				<file role="data" name="slideshow-default.css" />
+			</dir>		
 			<dir name="images">
-				<file role="data" name="controller-back-over.gif" />
-				<file role="data" name="controller-back.gif" />
 				<file role="data" name="controller-back.png" />
-				<file role="data" name="controller-forward-over.gif" />
-				<file role="data" name="controller-forward.gif" />
 				<file role="data" name="controller-forward.png" />
-				<file role="data" name="controller-over-back.gif" />
-				<file role="data" name="controller-pause-over.gif" />
-				<file role="data" name="controller-pause.gif" />
 				<file role="data" name="controller-pause.png" />
-				<file role="data" name="controller-play-over.gif" />
-				<file role="data" name="controller-play.gif" />
 				<file role="data" name="controller-play.png" />			
 			</dir>
 	  	<dir name="js">
@@ -103,7 +97,6 @@
     <channel>pear.symfony-project.com</channel>
     <min>1.1.0</min>
     <max>1.2.0</max>
-    <exclude>1.2.0</exclude>
    </package>
   </required>
  </dependencies>
