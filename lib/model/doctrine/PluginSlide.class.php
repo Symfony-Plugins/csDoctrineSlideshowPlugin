@@ -5,10 +5,6 @@
  */
 abstract class PluginSlide extends BaseSlide
 {
-	public function hasCaption()
-	{
-		return $this['caption'] != '' && $this['caption'] != null;
-	}
 	public function hasTitle()
 	{
 		return $this['title'] != '' && $this['title'] != null;
@@ -16,10 +12,6 @@ abstract class PluginSlide extends BaseSlide
 	public function hasDescription()
 	{
 		return $this['description'] != '' && $this['description'] != null;
-	}
-	public function hasUrl()
-	{
-		return $this['url'] != '' && $this['url'] != null;
 	}
 	public function getUploadPath()
 	{
