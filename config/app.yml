@@ -1,4 +1,4 @@
-app:
+all:
   slideshow:
     controls:   on
     speed:      fast

@@ -1,0 +1,11 @@
+.cs-slideshow .controls img
+{
+	border:none;
+	width:20px;
+}
+.cs-slideshow .controls
+{
+	margin-top:-40px;
+	z-index:100;
+	position:relative;
+}

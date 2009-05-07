@@ -23,14 +23,10 @@ Slide:
       type:   integer
     image:  
       type:   string(255)
-    title:    
+    title:
       type:   string(255)
     description:  
       type:   clob
-    url: 
-      type:   string(255)
-    caption:
-      type:   clob  
   relations:
     Slideshow:
       foreignAlias:  Slides
