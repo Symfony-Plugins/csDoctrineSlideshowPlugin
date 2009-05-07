@@ -2,7 +2,7 @@ csDoctrineSlideshowPlugin
 =================================
 
 This plugin is for Doctrine only.  It provides a Slideshow and Slide object for easy slideshow integration.  The javascript
-library incorporated into this plugin is jQuery Cycle.
+library incorporated into this plugin is jQuery Cycle. You must include jQuery for this plugin to work.
 
 How It Works
 ------------

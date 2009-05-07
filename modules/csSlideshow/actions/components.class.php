@@ -19,7 +19,6 @@ class csSlideshowComponents extends sfComponents
 			$this->slideshow = new Slideshow();
 		}
 		$this->images = sfConfig::get('app_slideshow_images');
-		$this->buttonwidth = isset($this->buttonwidth) ? $this->buttonwidth : '20px';
 	}
 	
 }
