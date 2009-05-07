@@ -1,6 +1,6 @@
 <div class="picture">
 	<?php if ($slideshow->width || $slideshow->height): ?>
-		<?php if (method_exists('thumbnail_tag')): ?>
+		<?php if (function_exists('thumbnail_tag')): ?>
 		<?php use_helper('Thumbnail') ?>
 		<!-- Uses thumbnail plugin if available -->
 			<?php echo thumbnail_tag($slide->getImagepath(),
