@@ -9,8 +9,9 @@
  */
 abstract class PluginSlideshowForm extends BaseSlideshowForm
 {
-	public function setup()
+	public function setUp()
 	{
+		parent::setUp()
 		unset($this['created_at'], $this['updated_at']);
 	}
 }
