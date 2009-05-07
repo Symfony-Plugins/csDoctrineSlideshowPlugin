@@ -9,3 +9,8 @@
 	z-index:100;
 	position:relative;
 }
+
+.cs-slideshow ul li
+{
+	list-style-type:none;
+}
