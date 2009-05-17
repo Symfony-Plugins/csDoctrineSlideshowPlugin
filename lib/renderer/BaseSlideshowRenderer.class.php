@@ -43,7 +43,7 @@ abstract class BaseSlideshowRenderer implements SlideshowRendererInterface
 	public function addStylesheet($stylesheet)
 	{
 		$this->stylesheets[] = $stylesheet;
-	}``
+	}
 	public function addJavascript($javascript)
 	{
 		$this->javascripts[] = $javascript;
