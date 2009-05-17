@@ -1,0 +1,17 @@
+slide_admin:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Slide
+    module:               slide_admin
+    prefix_path:          slide_admin
+    column:               id
+    with_wildcard_routes: true
+
+slideshow_admin:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Slideshow
+    module:               slideshow_admin
+    prefix_path:          slideshow_admin
+    column:               id
+    with_wildcard_routes: true    

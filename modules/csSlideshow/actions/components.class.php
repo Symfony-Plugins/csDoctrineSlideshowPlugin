@@ -18,7 +18,8 @@ class csSlideshowComponents extends sfComponents
 			$this->slides = isset($this->slides) ? $this->slides : Doctrine::getTable('Slide')->findAll();	
 			$this->slideshow = new Slideshow();
 		}
-		$this->images = sfConfig::get('app_slideshow_images');
+		$renderClass = $this->slideshow->getRenderer();
+		$this->renderer = new $renderClass();
 	}
 	
 }

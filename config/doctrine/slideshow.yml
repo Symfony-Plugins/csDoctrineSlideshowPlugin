@@ -4,29 +4,56 @@ Slideshow:
     name: string(255)
     width: string(255)
     height: string(255)
+    renderer:
+      default:  SlideshowJQueryCycleRenderer
+      type:   string(255)
     timeout:
       default:  5000  
       type: integer
     fx:
-      default:  fade
-      type: enum
-      values: [blindX, growX, scrollLeft, zoom, fade, turnLeft, turnDown, curtainX, scrollRight]
+      type: string(100)
     speed:
       default:  fast
       type: enum
       values: [slow, medium, fast]
+  relations:
+    Slides:
+      class: Slide
+      refClass: SlideshowSlide
+      foreignAlias: Slideshows
 
 Slide:
   actAs: [Timestampable]
   columns:
-    slideshow_id:
-      type:   integer
     image:  
       type:   string(255)
     title:
       type:   string(255)
     description:  
       type:   clob
+
+SlideshowSlide:
+  indexes: 
+    sortable:
+      type:     unique
+      fields:   [position, slideshow_id]
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    slideshow_id:
+      type: integer
+      primary: true
+    slide_id:
+      type: integer
+      primary: true
+    position:
+      type: integer(4)
   relations:
     Slideshow:
-      foreignAlias:  Slides
+      onDelete: CASCADE
+      foreignAlias: SlideshowSlides
+    Slide:
+      onDelete: CASCADE
+      foreignAlias: SlideshowSlides

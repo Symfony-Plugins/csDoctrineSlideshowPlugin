@@ -1,10 +1,9 @@
 all:
   slideshow:
-    controls:   on
-    speed:      fast
-    timeout:    5000
-    images:
-      back:     '/csDoctrineSlideshowPlugin/images/controller-back.png'
-      pause:    '/csDoctrineSlideshowPlugin/images/controller-pause.png'
-      play:     '/csDoctrineSlideshowPlugin/images/controller-play.png'
-      next:     '/csDoctrineSlideshowPlugin/images/controller-forward.png'
+    defaults:   
+      speed:      fast
+      timeout:    5000
+      fx:         null
+    renderers:  
+      - SlideshowJQueryCycleRenderer  
+      - SlideshowProRenderer

@@ -5,5 +5,11 @@
  */
 abstract class PluginSlideshow extends BaseSlideshow
 {
-
+	public function getOrderedSlideshowSlides()
+	{
+		return Doctrine::getTable('SlideshowSlide')->createQuery('s')
+											->andWhere('s.slideshow_id = ?', $this->id)
+											->orderBy('position ASC')
+											->execute();
+	}
 }

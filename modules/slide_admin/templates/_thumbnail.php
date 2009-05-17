@@ -1,0 +1,1 @@
+<?php echo image_tag($slide->getImagePath(), array('width' => '60px')) ?>
