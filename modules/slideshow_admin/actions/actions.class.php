@@ -15,7 +15,7 @@ class slideshow_adminActions extends autoSlideshow_adminActions
 {
 	protected function processForm(sfWebRequest $request, sfForm $form)
   {
-		$positions = $request->getParameter('slideshow_slide_position');
+		$positions = $request->getParameter('slideshow_slide_position', array());
 		Doctrine::getTable('SlideshowSlide')->sort($positions);
 		return parent::processForm($request, $form);
 	}

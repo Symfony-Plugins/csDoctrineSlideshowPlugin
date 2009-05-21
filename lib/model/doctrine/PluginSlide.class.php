@@ -17,8 +17,13 @@ abstract class PluginSlide extends BaseSlide
 	{
 		return 'uploads/slideshow';
 	}
-	public function getImagepath()
+	public function getImagepath($absolute = false)
 	{
-		return '/'.$this->getUploadPath() .'/'.$this->getImage();
+	  if ($absolute) 
+	  {
+	    sfProjectConfiguration::getActive()->loadHelpers(array('Asset', 'Tag', 'Url'));
+  		return public_path($this->getUploadPath() .'/'.$this->getImage(), array('absolute'=> 'true'));
+	  }
+    return '/'.$this->getUploadPath() .'/'.$this->getImage();
 	}
 }
