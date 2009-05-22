@@ -18,13 +18,14 @@ class SlideshowJQueryCycleRenderer extends BaseSlideshowRenderer
 		</div>
 	";	
 	
-	public $effects = array('blindX', 'growX', 'scrollLeft', 'zoom', 'fade', 'turnLeft', 'turnDown', 'curtainX', 'scrollRight');
-	public $defaults = array('fx' => 'fade');
-	
 	public function __construct()
 	{
+	  $this->addJavascript('http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js');
 		$this->addJavascript('/csDoctrineSlideshowPlugin/js/jquery.cycle.all.min.js');
 		$this->addStylesheet('/csDoctrineSlideshowPlugin/css/slideshow-default.css');
+		$this->addOption('fx', array('blindX', 'growX', 'scrollLeft', 'zoom', 'fade', 'turnLeft', 'turnDown', 'curtainX', 'scrollRight'));
+		$this->addOption('speed', array('slow', 'fast'));
+		$this->addOption('timeout', null, '5000');
 	}
 	public function render($slideshow)
 	{
@@ -72,17 +73,10 @@ class SlideshowJQueryCycleRenderer extends BaseSlideshowRenderer
 			});
 		</script>
 EOF;
-		if($fx = $slideshow->fx)
-		{
-			if (!in_array($fx, $this->effects)) 
-			{
-				throw new sfException('This Slideshow Renderer only accepts the following effects: "'.implode(', ', $this->effects).'"');
-			}
-		}
-		else
-		{
-			$fx = $this->defaults['fx'];
-		}
-		return sprintf($js, $fx, $slideshow->speed, $slideshow->timeout);
+		return sprintf($js, 
+		    $this->getOption('fx', $slideshow), 
+		    $this->getOption('speed', $slideshow), 
+		    $this->getOption('timeout', $slideshow)
+		    );
 	}
 }

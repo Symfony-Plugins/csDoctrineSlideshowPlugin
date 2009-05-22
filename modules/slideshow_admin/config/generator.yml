@@ -16,6 +16,6 @@ generator:
       list:    ~
       filter:  ~
       form:    
-        display: [name, width, height, timeout, fx, speed, slides_list, _slide_order, _new_slide]
+        display: [name, width, height, options, renderer, slides_list, _slide_order, _new_slide]
       edit:    ~
       new:     ~

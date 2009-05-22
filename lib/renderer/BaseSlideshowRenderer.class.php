@@ -21,6 +21,9 @@ abstract class BaseSlideshowRenderer implements SlideshowRendererInterface
 			</ul>
 		</div>
 	";
+	
+	public $options = array();
+  public $defaults = array();
 
 	public function render($slideshow)
 	{
@@ -47,6 +50,25 @@ abstract class BaseSlideshowRenderer implements SlideshowRendererInterface
 	public function addJavascript($javascript)
 	{
 		$this->javascripts[] = $javascript;
+	}
+	public function addOption($option, $choices = null, $default = null)
+	{
+    $this->options[$option] = $default;
+    if ($choices) 
+    {
+      $this->$option = $choices;
+    }
+	}
+	public function getOption($option, $slideshow)
+	{
+	  $default = isset($this->defaults[$option]) ? $this->defaults[$option] : null;
+    $value = $slideshow->getOption($option, $default); 
+    if (isset($this->$option) && is_array($this->$option) && array_key_exists($value, $this->$option)) 
+    {
+      $options= $this->$option;
+      return $options[$value];
+    }
+    return $value;
 	}
 	public function getSlide($slide)
 	{

@@ -12,4 +12,9 @@ abstract class PluginSlideshow extends BaseSlideshow
 											->orderBy('position ASC')
 											->execute();
 	}
+	public function getOption($option, $default = null)
+	{
+    $options = sfToolkit::stringToArray($this->options);
+    return isset($options[$option]) ? $options[$option] : $default;
+	}
 }

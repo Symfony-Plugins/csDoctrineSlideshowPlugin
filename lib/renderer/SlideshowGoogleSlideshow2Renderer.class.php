@@ -5,12 +5,6 @@
 */
 class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
 {
-  // public $controller_back  = '/csDoctrineSlideshowPlugin/images/controller-back.png';
-  //   public $controller_pause   = '/csDoctrineSlideshowPlugin/images/controller-pause.png';
-  //    public $controller_play   = '/csDoctrineSlideshowPlugin/images/controller-play.png';
-  //   public $controller_next  = '/csDoctrineSlideshowPlugin/images/controller-forward.png';
-  // public $thumb_width       = 48;
-  // public $thumb_height      = 38;
   public $slideshow_template = "
    <div id='slideshow' class='cs-slideshow'>
      %%slides%%

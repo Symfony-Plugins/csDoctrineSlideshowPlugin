@@ -5,5 +5,5 @@ all:
       timeout:    5000
       fx:         null
     renderers:  
-      - SlideshowJQueryCycleRenderer  
-      - SlideshowProRenderer
+      SlideshowJQueryCycleRenderer: 'JQuery Cycle'
+      SlideshowGoogleSlideshow2Renderer: 'Google Slideshow 2'
