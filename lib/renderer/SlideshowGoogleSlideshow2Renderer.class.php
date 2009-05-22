@@ -19,8 +19,8 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
 		$this->addJavascript('/csDoctrineSlideshowPlugin/js/mootools.js');
   	$this->addJavascript('/csDoctrineSlideshowPlugin/js/slideshow.min.js');
 		$this->addStylesheet('/csDoctrineSlideshowPlugin/css/google-slideshow.css');
-		$this->addOption('thumbnails', array('true', 'false'), 'true');
-		$this->addOption('paused', array('true', 'false'), 'false');
+		$this->addOption('thumbnails', array('false', 'true'), 'true');
+		$this->addOption('paused', array('false', 'true'), 'false');
 	}
 	public function render($slideshow)
 	{

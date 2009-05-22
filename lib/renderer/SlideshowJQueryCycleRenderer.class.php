@@ -23,7 +23,7 @@ class SlideshowJQueryCycleRenderer extends BaseSlideshowRenderer
 	  $this->addJavascript('http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js');
 		$this->addJavascript('/csDoctrineSlideshowPlugin/js/jquery.cycle.all.min.js');
 		$this->addStylesheet('/csDoctrineSlideshowPlugin/css/slideshow-default.css');
-		$this->addOption('fx', array('blindX', 'growX', 'scrollLeft', 'zoom', 'fade', 'turnLeft', 'turnDown', 'curtainX', 'scrollRight'));
+		$this->addOption('fx', array('blindX', 'growX', 'scrollLeft', 'zoom', 'fade', 'turnLeft', 'turnDown', 'curtainX', 'scrollRight'), 'fade');
 		$this->addOption('speed', array('slow', 'fast'));
 		$this->addOption('timeout', null, '5000');
 	}

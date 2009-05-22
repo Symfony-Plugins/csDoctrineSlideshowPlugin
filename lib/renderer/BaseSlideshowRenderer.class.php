@@ -53,7 +53,7 @@ abstract class BaseSlideshowRenderer implements SlideshowRendererInterface
 	}
 	public function addOption($option, $choices = null, $default = null)
 	{
-    $this->options[$option] = $default;
+    $this->options[$option] = (string)$default;
     if ($choices) 
     {
       $this->$option = $choices;
