@@ -6,7 +6,6 @@
 abstract class sfOptionsForm extends sfFormDoctrine
 {
   public function __construct($defaults, $object = null, $options = array(), $CSRFSecret = null)
-  // public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
   {
     if(!is_array($defaults))
     {
@@ -14,7 +13,6 @@ abstract class sfOptionsForm extends sfFormDoctrine
     }
     $this->option_defaults = $defaults;
     return parent::__construct($object, $options, $CSRFSecret);
-    // return parent::__construct($defaults, $options, $CSRFSecret);
   }
   public function setup()
   {

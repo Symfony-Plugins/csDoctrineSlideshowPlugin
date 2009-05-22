@@ -3,7 +3,7 @@
 /**
 * Parses an options string into a form object
 */
-abstract class sfSlideshowOptionsForm extends sfOptionsForm
+class sfSlideshowOptionsForm extends sfOptionsForm
 {
   public $renderer;
   public function setup()
@@ -34,10 +34,8 @@ abstract class sfSlideshowOptionsForm extends sfOptionsForm
   }
   public function getRendererClass()
   {
-    // Guesses the renderer class based on the name of the options form
-    // If classes follow naming conventions, this will work.  Otherwise,
     // this method can be overridden
-    return str_replace('OptionsForm', '', get_class($this));
+    return $this->object->renderer;
   }
   public function getModelName()
   {

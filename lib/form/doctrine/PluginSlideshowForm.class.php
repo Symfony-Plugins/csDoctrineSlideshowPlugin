@@ -21,8 +21,13 @@ abstract class PluginSlideshowForm extends BaseSlideshowForm
         $optionsClass = $this->object->renderer . 'OptionsForm';
         if (class_exists($optionsClass)) 
         {
-          $this->embedForm('options', $optionsForm);
+          $optionsForm = new $optionsClass($this->object->options, $this->object);
         }
+        else
+        {
+          $optionsForm = new sfSlideshowOptionsForm($this->object->options, $this->object);
+        }
+        $this->embedForm('options', $optionsForm);
 		  }
 		  else
 		  {
@@ -41,10 +46,21 @@ abstract class PluginSlideshowForm extends BaseSlideshowForm
 	public function bind(array $taintedValues = null, array $taintedFiles = null)
 	{
     //Do Special binding for slideshow options if options exist
-    if (array_key_exists('options', $taintedValues)) 
+    if (array_key_exists('options', $taintedValues) && array_key_exists('options', $this->embeddedForms)) 
     {
-      // Flattens the option form into a string
-      $taintedValues['options'] = $this->embeddedForms['options']->getFlattenedValues($taintedValues['options']);
+      //renderer is changed, pull in default rendering options
+      if ($taintedValues['renderer'] != $this->object->renderer) 
+      {
+	      $class = $taintedValues['renderer'];
+        $renderer = new $class();
+        $taintedValues['options'] = $renderer->getDefaultOptions();
+      }
+      else
+      {
+        // Flattens the option form into a string
+        $taintedValues['options'] = $this->embeddedForms['options']->getFlattenedValues($taintedValues['options']);
+      }
+      // replaces embedded form with a string widget
       unset($this['options']);
       $this->widgetSchema['options'] = new sfWidgetFormInput();
       $this->validatorSchema['options'] = new sfValidatorString();

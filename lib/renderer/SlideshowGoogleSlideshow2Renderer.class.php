@@ -14,14 +14,13 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
     '%%image_path%%' : { caption: '%%caption%%', thumbnail: '%%thumb_path%%' }
   ";
 	
-  // public $effects = array('blindX', 'growX', 'scrollLeft', 'zoom', 'fade', 'turnLeft', 'turnDown', 'curtainX', 'scrollRight');
-  // public $defaults = array('fx' => 'fade');
-	
 	public function __construct()
 	{
 		$this->addJavascript('/csDoctrineSlideshowPlugin/js/mootools.js');
   	$this->addJavascript('/csDoctrineSlideshowPlugin/js/slideshow.min.js');
 		$this->addStylesheet('/csDoctrineSlideshowPlugin/css/google-slideshow.css');
+		$this->addOption('thumbnails', array('true', 'false'), 'true');
+		$this->addOption('paused', array('true', 'false'), 'false');
 	}
 	public function render($slideshow)
 	{
@@ -53,7 +52,7 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
            };
            
 			 var myShow = new Slideshow('slideshow', data, {controller: false,
-      height: %s, width: %s, thumbnails: true, paused: true});
+      height: %s, width: %s, thumbnails: %s, paused: %s});
 
              if (myShow.options.thumbnails){
                ['a', 'b'].each(function(p){
@@ -65,6 +64,12 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
 		</script>
 EOF;
 
-		return sprintf($js, $this->getThumbnails($slideshow), $slideshow->height, $slideshow->width);
+		return sprintf($js, 
+		    $this->getThumbnails($slideshow), 
+		    $slideshow->height, 
+		    $slideshow->width,
+		    $this->getOption('thumbnails', $slideshow),
+		    $this->getOption('paused', $slideshow)
+		  );
 	}
 }

@@ -70,6 +70,15 @@ abstract class BaseSlideshowRenderer implements SlideshowRendererInterface
     }
     return $value;
 	}
+	public function getDefaultOptions()
+	{
+	  $opt = '';
+    foreach ($this->options as $option => $default) 
+    {
+      $opt .= "$option=$default\n";
+    }
+    return $opt;
+	}
 	public function getSlide($slide)
 	{
 		$template = str_replace('%%image%%', $this->getSlideImage($slide), $this->slide_template);
