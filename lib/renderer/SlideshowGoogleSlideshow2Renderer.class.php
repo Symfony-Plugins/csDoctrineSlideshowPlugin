@@ -19,8 +19,11 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
 		$this->addJavascript('/csDoctrineSlideshowPlugin/js/mootools.js');
   	$this->addJavascript('/csDoctrineSlideshowPlugin/js/slideshow.min.js');
 		$this->addStylesheet('/csDoctrineSlideshowPlugin/css/google-slideshow.css');
-		$this->addOption('thumbnails', array('false', 'true'), 'true');
-		$this->addOption('paused', array('false', 'true'), 'false');
+		
+		$this->addOption('thumbnails', 'true', array('false', 'true'));
+		$this->addOption('paused', 'false', array('false', 'true'));
+		$this->addOption('controller', 'false', array('false', 'true'));
+		$this->addOption('captions', 'false', array('false', 'true'));		
 	}
 	public function render($slideshow)
 	{
@@ -34,14 +37,20 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
 	public function getThumbnails($slideshow)
 	{
 	  $ret = array();
-    foreach ($slideshow['Slides'] as $slide) 
+    foreach ($slideshow->getOrderedSlides() as $slide) 
     {
       $slide_js = str_replace('%%image_path%%', $slide->getImagePath(true), $this->slide_template);
       $slide_js = str_replace('%%thumb_path%%', $slide->getImagePath(true), $slide_js);
-      $ret[] = str_replace('%%caption%%', $slide['description'], $slide_js);
+      $ret[] = str_replace('%%caption%%', $this->getSlideDescription($slide), $slide_js);
     }
     return implode(", \n", $ret);
 	}
+	
+	public function getSlideDescription($slide)
+	{
+	  return addslashes($slide['description']);
+	}
+	
 	public function renderCustomJavascript($slideshow)
 	{
 		$js = <<<EOF
@@ -51,8 +60,13 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
              %s
            };
            
-			 var myShow = new Slideshow('slideshow', data, {controller: false,
-      height: %s, width: %s, thumbnails: %s, paused: %s});
+			 var myShow = new Slideshow('slideshow', data, {
+			    controller: %s,
+          height: %s, 
+          width: %s, 
+          thumbnails: %s, 
+          paused: %s,
+          captions: %s});
 
              if (myShow.options.thumbnails){
                ['a', 'b'].each(function(p){
@@ -66,10 +80,12 @@ EOF;
 
 		return sprintf($js, 
 		    $this->getThumbnails($slideshow), 
+		    $this->getOption('controller', $slideshow),
 		    $slideshow->height, 
 		    $slideshow->width,
 		    $this->getOption('thumbnails', $slideshow),
-		    $this->getOption('paused', $slideshow)
+		    $this->getOption('paused', $slideshow),
+		    $this->getOption('captions', $slideshow)    
 		  );
 	}
 }

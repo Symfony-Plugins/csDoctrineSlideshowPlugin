@@ -37,7 +37,7 @@ abstract class BaseSlideshowRenderer implements SlideshowRendererInterface
 	public function getSlides($slideshow)
 	{
 		$slides = array();
-		foreach ($slideshow['Slides'] as $slide) 
+		foreach ($slideshow->getOrderedSlides() as $slide) 
 		{
 			$slides[] = $this->getSlide($slide);
 		}
@@ -51,7 +51,7 @@ abstract class BaseSlideshowRenderer implements SlideshowRendererInterface
 	{
 		$this->javascripts[] = $javascript;
 	}
-	public function addOption($option, $choices = null, $default = null)
+	public function addOption($option, $default = null, $choices = null)
 	{
     $this->options[$option] = (string)$default;
     if ($choices) 
@@ -62,8 +62,8 @@ abstract class BaseSlideshowRenderer implements SlideshowRendererInterface
 	public function getOption($option, $slideshow)
 	{
 	  $default = isset($this->defaults[$option]) ? $this->defaults[$option] : null;
-    $value = $slideshow->getOption($option, $default); 
-    if (isset($this->$option) && is_array($this->$option) && array_key_exists($value, $this->$option)) 
+    $value = (string)$slideshow->getOption($option, $default); 
+    if (isset($this->$option) && is_array($this->$option) && $value && array_key_exists($value, $this->$option)) 
     {
       $options= $this->$option;
       return $options[$value];

@@ -12,9 +12,17 @@ abstract class PluginSlideshow extends BaseSlideshow
 											->orderBy('position ASC')
 											->execute();
 	}
+	public function getOrderedSlides()
+	{
+		return Doctrine::getTable('Slide')->createQuery('s')
+		                  ->innerJoin('s.SlideshowSlide ss')
+											->andWhere('ss.slideshow_id = ?', $this->id)
+											->orderBy('ss.position ASC')
+											->execute();
+	}
 	public function getOption($option, $default = null)
 	{
-    $options = sfToolkit::stringToArray($this->options);
+    $options = csSlideshowToolkit::stringToArray($this->options);
     return isset($options[$option]) ? $options[$option] : $default;
 	}
 }

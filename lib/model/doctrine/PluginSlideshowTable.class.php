@@ -4,5 +4,14 @@
  */
 class PluginSlideshowTable extends Doctrine_Table
 {
-
+  //Attempting to query ordered slides, doesn't work
+  /*
+  public function createQuery($alias='')
+  {
+    $q = parent::createQuery($alias);
+    $alias = $q->getRootAlias();
+    return $q->innerJoin($alias.'.SlideshowSlides ss')
+              ->innerJoin('ss.Slide slides')
+              ->orderBy('ss.position ASC');
+  }*/
 }
