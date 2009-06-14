@@ -114,11 +114,12 @@ Notes:
 	color: #FFFFFF;
 	font: normal 12px Helvetica, Helv, Arial, sans-serif;
 	position: absolute;
-	bottom: 64px;
+	left: 50%;
+	margin-left:-250px;
+	bottom: 85px;
   padding: 5px;
 	z-index: 10000;
-  width: 390px;	
-	margin-left:5px;
+  width: 490px;	
 	height: auto !important;
 }
 
@@ -151,10 +152,10 @@ Notes:
 .slideshow-controller {
 	background: url(../images/controller.png) no-repeat;
 	height: 42px;
-	left: 155px;
 	overflow: hidden;
-	position: absolute;
-	top: 170px;
+	position: relative;
+	margin:-47px auto 0;
+	padding-bottom:5px;
 	width: 238px;
 	z-index: 10000;
 }

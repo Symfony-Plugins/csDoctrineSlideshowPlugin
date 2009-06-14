@@ -4,11 +4,11 @@
  */
 class PluginSlideshowSlideTable extends Doctrine_Table
 {
-	public function createQuery($alias = '')
-	{
-		return parent::createQuery($alias)->orderBy(($alias ? $alias.'.' : '').'position ASC');
-	}
-	
+  public function createQuery($alias = '')
+  {
+    return parent::createQuery($alias)->orderBy(($alias ? $alias.'.' : '').'position ASC');
+  }
+  
   /**
    * Send an array from the sortable_element tag and it will 
    * update the sort order to match
@@ -17,18 +17,20 @@ class PluginSlideshowSlideTable extends Doctrine_Table
    * @return void
    * @author Travis Black
    */
- 	public function sort(array $order)
+  public function sort(array $order)
   {
-		$objects = $this->createQuery()->whereIn('id', array_keys($order))->execute();
+    $order = array_filter($order);
+
+    $objects = $this->createQuery()->whereIn('id', array_keys($order))->execute();
     foreach ($objects as $object) 
     {
-			$object->position = null;
-			$object->save();
+      $object->position = null;
+      $object->save();
     }
-		foreach ($objects as $object) 
-		{
-			$object->position = $order[$object->id];
-			$object->save();
-		}
+    foreach ($objects as $object) 
+    {
+      $object->position = $order[$object->id];
+      $object->save();
+    }
   }
 }

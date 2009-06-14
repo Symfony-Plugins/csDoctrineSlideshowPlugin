@@ -30,6 +30,9 @@ SlideshowSlide:
     sortable:
       type:     unique
       fields:   [position, slideshow_id]
+    slideshow_slides:
+      type:     unique
+      fields:   [slide_id, slideshow_id]
   columns:
     id:
       type: integer

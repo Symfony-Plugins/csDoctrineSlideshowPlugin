@@ -76,7 +76,7 @@ abstract class PluginSlideshowSlide extends BaseSlideshowSlide
     
     $last = $q->fetchOne();
 
-    return $last ? $last->position : 1;
+    return $last ? $last->position : 0;
   }
 
 /**

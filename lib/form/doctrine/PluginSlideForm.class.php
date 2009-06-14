@@ -21,7 +21,7 @@ abstract class PluginSlideForm extends BaseSlideForm
 		sfProjectConfiguration::getActive()->loadHelpers('Asset','Url','Tag');
 		$this->widgetSchema[$field] = new sfWidgetFormInputFileEditable(array(
                                          'label'     => 'Image',
-                                         'file_src'  => $path ? $path .'/'.$this->getObject()->getImage() : image_path('/'.$this->getObject()->getImagepath()),
+                                         'file_src'  => $path ? $path .'/'.$this->getObject()->getImage() : image_path($this->getObject()->getImagepath()),
                                          'is_image'  => true,
                                          'edit_mode' => !$this->isNew() && $this->getObject()->getImage(),
                                          'template'  => '<div style="width: 300px; margin-left: 160px;">%file%<br /><br />%input%<br />%delete% %delete_label%</div>'));

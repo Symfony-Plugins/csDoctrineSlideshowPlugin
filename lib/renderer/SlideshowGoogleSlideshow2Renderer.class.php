@@ -10,33 +10,37 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
      %%slides%%
    </div>
   ";
+  
   public $slide_template = "
     '%%image_path%%' : { caption: '%%caption%%', thumbnail: '%%thumb_path%%' }
   ";
-	
-	public function __construct()
-	{
-		$this->addJavascript('/csDoctrineSlideshowPlugin/js/mootools.js');
-  	$this->addJavascript('/csDoctrineSlideshowPlugin/js/slideshow.min.js');
-		$this->addStylesheet('/csDoctrineSlideshowPlugin/css/google-slideshow.css');
-		
-		$this->addOption('thumbnails', 'true', array('false', 'true'));
-		$this->addOption('paused', 'false', array('false', 'true'));
-		$this->addOption('controller', 'false', array('false', 'true'));
-		$this->addOption('captions', 'false', array('false', 'true'));		
-	}
-	public function render($slideshow)
-	{
-		echo $this->getSlideshow($slideshow);
-		echo $this->renderCustomJavascript($slideshow);
-	}
-	public function getSlideshow($slideshow)
-	{
+  
+  public function __construct()
+  {
+    $this->addJavascript('/csDoctrineSlideshowPlugin/js/mootools.js');
+    $this->addJavascript('/csDoctrineSlideshowPlugin/js/slideshow.min.js');
+    $this->addStylesheet('/csDoctrineSlideshowPlugin/css/google-slideshow.css');
+    
+    $this->addOption('thumbnails', 'true', array('false', 'true'));
+    $this->addOption('paused', 'false', array('false', 'true'));
+    $this->addOption('controller', 'false', array('false', 'true'));
+    $this->addOption('captions', 'false', array('false', 'true'));  
+  }
+  
+  public function render($slideshow)
+  {
+    echo $this->getSlideshow($slideshow);
+    echo $this->renderCustomJavascript($slideshow);
+  }
+  
+  public function getSlideshow($slideshow)
+  {
     return str_replace('%%slides%%', $this->getSlideImage($slideshow['Slides'][0]), $this->slideshow_template);
-	}
-	public function getThumbnails($slideshow)
-	{
-	  $ret = array();
+  }
+  
+  public function getThumbnails($slideshow)
+  {
+    $ret = array();
     foreach ($slideshow->getOrderedSlides() as $slide) 
     {
       $slide_js = str_replace('%%image_path%%', $slide->getImagePath(true), $this->slide_template);
@@ -44,24 +48,24 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
       $ret[] = str_replace('%%caption%%', $this->getSlideDescription($slide), $slide_js);
     }
     return implode(", \n", $ret);
-	}
-	
-	public function getSlideDescription($slide)
-	{
-	  return addslashes($slide['description']);
-	}
-	
-	public function renderCustomJavascript($slideshow)
-	{
-		$js = <<<EOF
-		<script type='text/javascript'>
-		window.addEvent('domready', function(){
+  }
+  
+  public function getSlideDescription($slide)
+  {
+    return addslashes($slide['description']);
+  }
+  
+  public function renderCustomJavascript($slideshow)
+  {
+    $js = <<<EOF
+    <script type='text/javascript'>
+    window.addEvent('domready', function(){
            var data = {
              %s
            };
            
-			 var myShow = new Slideshow('slideshow', data, {
-			    controller: %s,
+       var myShow = new Slideshow('slideshow', data, {
+          controller: %s,
           height: %s, 
           width: %s, 
           thumbnails: %s, 
@@ -75,17 +79,17 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
                }, myShow);
              }
            });
-		</script>
+    </script>
 EOF;
 
-		return sprintf($js, 
-		    $this->getThumbnails($slideshow), 
-		    $this->getOption('controller', $slideshow),
-		    $slideshow->height, 
-		    $slideshow->width,
-		    $this->getOption('thumbnails', $slideshow),
-		    $this->getOption('paused', $slideshow),
-		    $this->getOption('captions', $slideshow)    
-		  );
-	}
+    return sprintf($js, 
+        $this->getThumbnails($slideshow), 
+        $this->getOption('controller', $slideshow),
+        $slideshow->height, 
+        $slideshow->width,
+        $this->getOption('thumbnails', $slideshow),
+        $this->getOption('paused', $slideshow),
+        $this->getOption('captions', $slideshow)    
+      );
+  }
 }
