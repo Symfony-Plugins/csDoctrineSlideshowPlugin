@@ -5,7 +5,16 @@
  */
 abstract class PluginSlideshowSlide extends BaseSlideshowSlide
 {
-	/**
+  public function getSlideTitle()
+  {
+    return $this->getSlide()->getTitle();
+  }
+  
+  
+  // ====================
+  // = Sortable Methods =
+  // ====================
+  /**
    * Sets a sortable object to the first position
    *
    * @return void
@@ -66,13 +75,13 @@ abstract class PluginSlideshowSlide extends BaseSlideshowSlide
    * @return $position
    * @author Travis Black
    */
-	public function getFinalPosition()
+  public function getFinalPosition()
   {
     $q = Doctrine_Query::create()
                        ->select('position')
                        ->from('SlideshowSlide st')
                        ->orderBy('position desc')
-											 ->addWhere('st.slideshow_id = ?', $this['slideshow_id']);
+                       ->addWhere('st.slideshow_id = ?', $this['slideshow_id']);
     
     $last = $q->fetchOne();
 
@@ -105,12 +114,12 @@ abstract class PluginSlideshowSlide extends BaseSlideshowSlide
              ->update('SlideshowSlide')
              ->set('position', 'position - ?', '1')
              ->where('position > ' . $this->position)
-						 ->addWhere('slideshow_id = ?', $this['slideshow_id']);
+             ->addWhere('slideshow_id = ?', $this['slideshow_id']);
 
     $q->execute();
   }  
 
-	/**
+  /**
    * Moves a sortable object to a designate position
    *
    * @param string $newPosition
@@ -122,17 +131,17 @@ abstract class PluginSlideshowSlide extends BaseSlideshowSlide
     $position = $this->position;
 
     // Position is required to be unique. Blanks it out before it moves others up/down.
-		$this->setPosition(null);
-		$this->save();
+    $this->setPosition(null);
+    $this->save();
 
     if ($position > $newPosition)
     {
       $q = Doctrine_Query::create()
                          ->update('SlideshowSlide')
                          ->set('position', 'position + 1')
-                         ->where('position < ' . $position)
-                         ->andWhere('position >= ' . $newPosition)
-                         ->andWhere('slideshow_id = ?' . $this['slideshow_id'])
+                         ->where('position < ?', $position)
+                         ->andWhere('position >= ?', $newPosition)
+                         ->andWhere('slideshow_id = ?', $this['slideshow_id'])
                          ->orderBy('position DESC');
                 
     }
@@ -142,11 +151,11 @@ abstract class PluginSlideshowSlide extends BaseSlideshowSlide
                          ->update('SlideshowSlide')
                          ->set('position', 'position - 1')
                          ->where('position > ?', $position)
-                         ->andWhere('slideshow_id = ?' . $this['slideshow_id'])
-                         ->andWhere('position <= ' . $newPosition);
+                         ->andWhere('slideshow_id = ?', $this['slideshow_id'])
+                         ->andWhere('position <= ?', $newPosition);
     }
     $q->execute();
-		$object->setPosition($newPosition);
-		$object->save();
+    $this->setPosition($newPosition);
+    $this->save();
   }
 }

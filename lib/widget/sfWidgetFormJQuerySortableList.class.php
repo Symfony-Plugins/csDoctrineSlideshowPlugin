@@ -31,48 +31,6 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
     $this->addOption('template', '%group% %options%');
   }
   
-  public function addRelationsOptions($options)
-  {
-    foreach (Doctrine::getTable(get_class($options['object']))->getRelations() as $relation) 
-    {
-      if ($relation['alias'] == $options['hasMany']) 
-      {
-        $hasManyClass = $relation['class'];
-      }
-    }
-
-    $this->addOption('hasManyClass', $hasManyClass);
-  }
-  public function checkRequiredOptions($options)
-  {
-    // check required options
-    if ($diff = array_diff($this->requiredOptions, array_merge(array_keys($this->options), array_keys($options))))
-    {
-      throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
-    }
-  }
-  
-  // Pulls default choices based on the passed options if none exist
-  protected function getChoices($options)
-  {
-    return isset($options['choices']) ?  
-        $options['choices'] : $this->collectionToArray(
-            Doctrine::getTable($this->getOption('hasManyClass'))
-              ->createQuery('a')
-              ->orderBy($this->getOption('position_field'))
-              ->execute()
-            );
-  }
-  
-  public function collectionToArray($collection, $col='id')
-  {
-    $ret = array();
-    foreach ($collection as $object) 
-    {
-      $ret[$object->$col] = $object;
-    }
-    return $ret;
-  }
   /**
    * @param  string $name        The element name
    * @param  string $value       The value displayed in this widget
@@ -86,10 +44,19 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
     sfProjectConfiguration::getActive()->loadHelpers(array('Form', 'Javascript', 'Asset', 'Tag'));
+
+    // As this relation isn't added by the form framework, find the active primary keys
+    if ($value == null) 
+    {
+      $rel = $this->getOption('hasMany');
+      $value = $this->getOption('object')->$rel->getPrimaryKeys();
+    }
+
     $checkboxes = parent::render($name, $value, $attributes, $errors);
-    $checkboxes = $checkboxes .
-                      $this->getStyles().
-                      javascript_tag($this->getJavascriptFunctions());
+    $checkboxes = $this->getStyles().
+                      $checkboxes.
+                      javascript_tag($this->getJavascriptFunctions())
+
     ;
     return $checkboxes;
     
@@ -122,20 +89,6 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
     return $selected.$unselected;
   }
   
-  protected function getPositionObjects()
-  {
-    $object = $this->getOption('object');
-    $selectedObjects = Doctrine::getTable($this->getOption('refClass'))
-                              ->createQuery('s')
-                              ->select('s.*, obj_id as has_many_id')
-                              ->innerJoin('s.'.get_class($object).' obj')
-                              ->where('obj.id = ?', $object->id)   
-                              ->orderBy('s.'.$this->getOption('position_field'))                          
-                              ->execute();
-
-    return $this->collectionToArray($selectedObjects, 'has_many_id');
-
-  }
   // Renders individual item inputs
   protected function renderItemInput($name, $attributes, $key, $option, $positionName, $selected)
   {
@@ -143,7 +96,7 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
     $positionCol = $this->getOption('position_field');
      
     $baseAttributes = array(
-      'name'  => substr($name, 0, -2),
+      'name'  => $this->generateValueName($name),
       'type'  => 'checkbox',
       'value' => self::escapeOnce($key),
       'id'    => $id = $this->generateId($name, self::escapeOnce($key)),
@@ -189,6 +142,64 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
     return $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class'), 'id' => $id));
   }
   
+  protected function getPositionObjects()
+  {
+    $object = $this->getOption('object');
+    $selectedObjects = Doctrine::getTable($this->getOption('hasManyClass'))
+                              ->createQuery('s')
+                              ->select('s.*, obj.id as has_many_id')
+                              ->innerJoin('s.'.get_class($object).' obj')
+                              ->where('obj.id = ?', $object->id)   
+                              ->orderBy('s.'.$this->getOption('position_field'))                          
+                              ->execute();
+
+    return $this->collectionToArray($selectedObjects);
+
+  }
+
+  public function addRelationsOptions($options)
+  {
+    foreach (Doctrine::getTable(get_class($options['object']))->getRelations() as $relation) 
+    {
+      if ($relation['alias'] == $options['hasMany']) 
+      {
+        $hasManyClass = $relation['class'];
+      }
+    }
+
+    $this->addOption('hasManyClass', $hasManyClass);
+  }
+  public function checkRequiredOptions($options)
+  {
+    // check required options
+    if ($diff = array_diff($this->requiredOptions, array_merge(array_keys($this->options), array_keys($options))))
+    {
+      throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
+    }
+  }
+  
+  // Pulls default choices based on the passed options if none exist
+  protected function getChoices($options)
+  {
+    return isset($options['choices']) ?  
+        $options['choices'] : $this->collectionToArray(
+            Doctrine::getTable($this->getOption('hasManyClass'))
+              ->createQuery('a')
+              ->orderBy($this->getOption('position_field'))
+              ->execute()
+            );
+  }
+  
+  public function collectionToArray($collection, $col='id')
+  {
+    $ret = array();
+    foreach ($collection as $object) 
+    {
+      $ret[$object->$col] = $object;
+    }
+    return $ret;
+  }
+  
   public function getJavascriptFunctions()
   {
     $javascripts = <<<EOF
@@ -228,8 +239,8 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
       {
         if ($(e).attr('checked')) 
         {
-          var last_slide = $("#%%selected_list_id%% input.position:last");
-          var last = parseInt(last_slide.attr('value'));
+          var last_object = $("#%%selected_list_id%% input.position:last");
+          var last = parseInt(last_object.attr('value'));
           last = last ? last : 0;
           $("#%%selected_list_id%%").append($(e).parent()); 
           $(e).parent().find('input.position').attr('value', last+1);
@@ -256,23 +267,33 @@ EOF;
   }
   public function getStyles()
   {
-    $javascripts = <<<EOF
-      <style type='text/stylesheet'>
-        #%%unselected_list_id%% .position-controls
-        {
-          display:none;
-        }
-      </style>
+    $styles = <<<EOF
+<style type='text/stylesheet'>
+  #%%unselected_list_id%% .position-controls
+  {
+    display:none;
+  }
+</style>
 EOF;
 
-    return strtr($javascripts, array(
-        '%%selected_list_id%%' => $this->getOption('selected_list_id'), 
+    return strtr($styles, array(
+        '%%unselected_list_id%%' => $this->getOption('unselected_list_id'), 
         ));
   }
   
   public function generatePositionName($name)
   {
     $strippedName = substr($name, 0, -2);
-    return substr($strippedName, 0, stripos($strippedName, '[')).'_position'.substr($strippedName, stripos($strippedName, '['));
+    return $strippedName.'[position][]';
+  }
+  public function generateValueName($name)
+  {
+    $strippedName = substr($name, 0, -2);
+    return $strippedName.'[value][]';
+  }
+
+  public function getJavascripts()
+  {
+    return array('http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js');
   }
 }

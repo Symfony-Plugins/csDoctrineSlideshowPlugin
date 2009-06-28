@@ -15,18 +15,18 @@ class PluginSlideshowSlideTable extends Doctrine_Table
    *
    * @param string $order
    * @return void
-   * @author Travis Black
    */
   public function sort(array $order)
   {
     $order = array_filter($order);
 
+    $this->createQuery('a')->update()
+         ->set('a.position = ?', null)
+         ->whereIn('a.id', array_keys($order))
+         ->execute();
+    
     $objects = $this->createQuery()->whereIn('id', array_keys($order))->execute();
-    foreach ($objects as $object) 
-    {
-      $object->position = null;
-      $object->save();
-    }
+    
     foreach ($objects as $object) 
     {
       $object->position = $order[$object->id];
