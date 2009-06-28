@@ -55,22 +55,23 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
     return addslashes($slide['description']);
   }
   
-  public function renderCustomJavascript($slideshow)
+  public function getCustomJavascript()
   {
     $js = <<<EOF
     <script type='text/javascript'>
     window.addEvent('domready', function(){
            var data = {
-             %s
+             %%thumbnails%%
            };
            
        var myShow = new Slideshow('slideshow', data, {
-          controller: %s,
-          height: %s, 
-          width: %s, 
-          thumbnails: %s, 
-          paused: %s,
-          captions: %s});
+          controller: %%controller%%,
+          height: %%height%%, 
+          width: %%width%%, 
+          thumbnails: %%has_thumbnails%%, 
+          paused: %%paused%%,
+          captions: %%captions%%
+        });
 
              if (myShow.options.thumbnails){
                ['a', 'b'].each(function(p){
@@ -81,15 +82,19 @@ class SlideshowGoogleSlideshow2Renderer extends BaseSlideshowRenderer
            });
     </script>
 EOF;
+  return $js;
+}
 
-    return sprintf($js, 
-        $this->getThumbnails($slideshow), 
-        $this->getOption('controller', $slideshow),
-        $slideshow->height, 
-        $slideshow->width,
-        $this->getOption('thumbnails', $slideshow),
-        $this->getOption('paused', $slideshow),
-        $this->getOption('captions', $slideshow)    
-      );
+  public function renderCustomJavascript($slideshow)
+  {
+    return strtr($this->getCustomJavascript(), array(
+        '%%thumbnails%%' => $this->getThumbnails($slideshow), 
+        '%%controller%%' => $this->getOption('controller', $slideshow),
+        '%%height%%' => $slideshow->height, 
+        '%%width%%' => $slideshow->width,
+        '%%has_thumbnails%%' => $this->getOption('thumbnails', $slideshow),
+        '%%paused%%' => $this->getOption('paused', $slideshow),
+        '%%captions%%' => $this->getOption('captions', $slideshow)    
+      ));
   }
 }

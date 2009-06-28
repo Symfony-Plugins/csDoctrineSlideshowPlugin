@@ -7,3 +7,5 @@ all:
     renderers:  
       SlideshowJQueryCycleRenderer: 'JQuery Cycle'
       SlideshowGoogleSlideshow2Renderer: 'Google Slideshow 2'
+      
+      # Add custom renderers to this list.  The format is $class => $readable_name

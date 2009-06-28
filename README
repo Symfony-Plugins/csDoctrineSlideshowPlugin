@@ -1,45 +1,27 @@
 csDoctrineSlideshowPlugin
-=================================
+=========================
 
-This plugin is for Doctrine only.  It provides a Slideshow and Slide object for easy slideshow integration.  The javascript
-library incorporated into this plugin is jQuery Cycle. You must include jQuery for this plugin to work.
+This plugin is for Doctrine only.  It provides a Slideshow and Slide object for easy slideshow integration.
 
 How It Works
 ------------
 
 Configure your slideshow defaults:
 
-	[yml]
-	app:
-	  slideshow:
-	  	controls:   on
-	  	speed:      fast
-	  	timeout:    5000
-	  	images:
-	  		back:     '/csDoctrineSlideshowPlugin/images/controller-back.png'
-	  		pause:    '/csDoctrineSlideshowPlugin/images/controller-pause.png'
-	  		play:     '/csDoctrineSlideshowPlugin/images/controller-play.png'
-	  		next:     '/csDoctrineSlideshowPlugin/images/controller-forward.png'
+    [yml]
+    all:
+    slideshow:
+      defaults:   
+        speed:      fast
+        timeout:    5000
+        fx:         null
+      renderers:  
+        SlideshowJQueryCycleRenderer: 'JQuery Cycle'
+        SlideshowGoogleSlideshow2Renderer: 'Google Slideshow 2'
 
 if you want anything different, you can override these settings in your app.yml
 
 Create a slideshow record in the database.
-
-Each slideshow object represents a different instance of a slideshow.  You can configure the width and height of your
-slideshow, control the speed, timeout, and effect.  The available effects are: 
-
-* blindX
-* growX
-* scrollLeft
-* zoom
-* fade
-* turnLeft
-* turnDown
-* curtainX
-* scrollRight
-
-Slides are added to each slideshow, and contain fields image, title, description, caption etc.  All of these gracefully degrade,
-so what is not needed can simply be ignored.
 
 Finally, to include your slideshow, simply include the csSlideshow module in your settings.yml, and then add the component call to your view:
 
@@ -64,8 +46,44 @@ Likewise, if you have a custom group of slides you'd rather the slideshow use, y
 	//For using a specific slideshow parameters with custom slides
 	<?php include_component('slideshow', 'slideshow', array('slideshow' => $slideshow, 'slides' => $slides)) ?>
 
+Renderers
+---------
+
+The plugin currently supports two renderers:  JQueryCycle and Google Slideshow2.  Each slideshow 
+renderer comes with its own customizable list of options.  These are completely configurable
+and easily extensible (see renderer libraries for documented code).  
+
+For _JQuery Cycle_  The available options are: 
+
+* Effects:
+  * blindX
+  * growX
+  * scrollLeft
+  * zoom
+  * fade
+  * turnLeft
+  * turnDown
+  * curtainX
+  * scrollRight
+
+* Speed of Effect
+  * slow
+  * fast
+
+* Timeout (integer)
+
+For _Google Slideshow2_  The available options are: 
+
+* Thumbnails (True or False) - Show Thumbnails
+* Controls (True or False) - Show Controls
+* Captions (True or False) - Show Captions
+* Paused (True or False) - If the slideshow is paused on load
+
+Slides are added separately, and can then be added to one or more slideshows. They contain fields image, title (alt text), and description (caption).  
+All of these gracefully degrade, so what is not needed can simply be ignored.
+
 ###Notes
-* All slides are ordered with the most recent ones first.  Use the csDoctrineActAsSortable plugin to allow granular sortiing.
+* All slides are orderable.
 * All slideshow images are hashed and saved in the uploads/slideshow directory.  To change this, override the getUploadPath() method
 in your Slide.class.php 
 * Javascripts/Styles are automatically included in your component, so editing of your view.yml is not necessary
@@ -74,4 +92,4 @@ Please contact bshaffer@centresource.com for any comments or questions
 
 ### Todo:
 	
-add the ability to use different slideshow libraries, namely google's slideshow plugin, which is incredible: http://code.google.com/p/slideshow/
+add drag-and-drop in the form

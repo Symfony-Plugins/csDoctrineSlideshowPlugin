@@ -13,11 +13,5 @@ require_once dirname(__FILE__).'/../lib/slideshow_adminGeneratorHelper.class.php
  */
 class slideshow_adminActions extends autoSlideshow_adminActions
 {
-  // protected function processForm(sfWebRequest $request, sfForm $form)
-  //   {
-  //  $positions = $request->getParameter('slideshow_slide_position', array());
-  //     $form->setSlidesListWidget();
-  //  $ret = parent::processForm($request, $form);
-  //     Doctrine::getTable('SlideshowSlide')->sort($positions); 
-  // }
+
 }

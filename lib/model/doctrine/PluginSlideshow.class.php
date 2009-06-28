@@ -5,39 +5,47 @@
  */
 abstract class PluginSlideshow extends BaseSlideshow
 {
-	public function getOrderedSlideshowSlides()
-	{
-		return Doctrine::getTable('SlideshowSlide')->createQuery('s')
-											->andWhere('s.slideshow_id = ?', $this->id)
-											->orderBy('position ASC')
-											->execute();
-	}
-	public function getOrderedSlides()
-	{
-		return Doctrine::getTable('Slide')->createQuery('s')
-		                  ->innerJoin('s.SlideshowSlide ss')
-											->andWhere('ss.slideshow_id = ?', $this->id)
-											->orderBy('ss.position ASC')
-											->execute();
-	}
-	public function getUnselectedSlides()
-	{
+  public function getOrderedSlideshowSlides()
+  {
+    return Doctrine::getTable('SlideshowSlide')->createQuery('s')
+                      ->andWhere('s.slideshow_id = ?', $this->id)
+                      ->orderBy('position ASC')
+                      ->execute();
+  }
+  public function getOrderedSlides()
+  {
     return Doctrine::getTable('Slide')->createQuery('s')
-											->whereNotIn('s.id', $this->getSlideIds())
-											->execute();
-	}
-	public function getSlideIds()
-	{
-	 $ids = array();
-	 foreach ($this['Slides'] as $slide) 
-	 {
-	   $ids[] = $slide['id'];
-	 }
-	 return $ids;
-	}
-	public function getOption($option, $default = null)
-	{
+                      ->innerJoin('s.SlideshowSlide ss')
+                      ->andWhere('ss.slideshow_id = ?', $this->id)
+                      ->orderBy('ss.position ASC')
+                      ->execute();
+  }
+  public function getUnselectedSlides()
+  {
+    return Doctrine::getTable('Slide')->createQuery('s')
+                      ->whereNotIn('s.id', $this->getSlideIds())
+                      ->execute();
+  }
+
+  public function getSlideIds()
+  {
+   $ids = array();
+   foreach ($this['Slides'] as $slide) 
+   {
+     $ids[] = $slide['id'];
+   }
+   return $ids;
+  }
+
+  public function getOption($option, $default = null)
+  {
     $options = csSlideshowToolkit::stringToArray($this->options);
     return isset($options[$option]) ? $options[$option] : $default;
-	}
+  }
+  
+  public function getSlideshowType()
+  {
+    $renderers = sfConfig::get('app_slideshow_renderers');
+    return $renderers[$this->renderer];
+  }
 }

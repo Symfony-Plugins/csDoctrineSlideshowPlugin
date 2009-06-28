@@ -1,89 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.4.6" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.1" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>csDoctrineSlideshowPlugin</name>
  <channel>pear.symfony-project.com</channel>
- <summary>Quickly implement slideshows into your project</summary>
+ <summary>csDoctrineSlideshowPlugin: quickly add slideshows to your project</summary>
  <description>
- 	Adds easily-configurable jquery-cycle powered slideshows into your project.  Slideshows can be configured entirely in the backend
- </description>
+   csDoctrineSlideshowPlugin allows you to add slides and mix and match with different
+   slideshows.  It provides a list of sortable slides for each of your slideshows, and 
+   the option to chose different renderers.  Currently, Google Slideshow2 and JQuery Cycle
+   are supported.
+  </description>
  <lead>
   <name>Brent Shaffer</name>
   <user>bshaffer</user>
   <email>bshaffer@centresource.com</email>
   <active>yes</active>
  </lead>
- <date>2009-05-07</date>
- <time>15:54:35</time>
+ <date>2009-06-28</date>
  <version>
-  <release>1.0.1</release>
-  <api>1.0.0</api>
+   <release>1.1.0</release>
+   <api>1.1.0</api>
  </version>
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
- <license uri="http://www.symfony-project.org/license">MIT license</license>
+<license uri="http://www.symfony-project.com/license">MIT</license>
  <notes>-</notes>
  <contents>
-  <dir name="/">
-   <file role="data" name="README" />
-   <file role="data" name="LICENSE" />
-   <dir name="config">
-   	<dir name="doctrine">
-			<file role="data" name="slideshow.yml" />
+   <dir name="/">
+     <dir name="config">
+       <file name="app.yml" role="data"/>
+        <dir name="doctrine">
+          <file name="slideshow.yml" role="data"/>
+        </dir>
+        <file name="routing.yml" role="data"/>
+      </dir>
+      <dir name="lib">
+        <dir name="api">
+          <file name="csSlideshowToolkit.class.php" role="data"/>
+        </dir>
+        <dir name="filter">
+          <dir name="doctrine">
+            <file name="PluginSlideFormFilter.class.php" role="data"/>
+            <file name="PluginSlideshowFormFilter.class.php" role="data"/>
+            <file name="PluginSlideshowSlideFormFilter.class.php" role="data"/>
+          </dir>
+        </dir>
+        <dir name="form">
+          <dir name="doctrine">
+            <file name="PluginSlideForm.class.php" role="data"/>
+            <file name="PluginSlideshowForm.class.php" role="data"/>
+            <file name="PluginSlideshowSlideForm.class.php" role="data"/>
+          </dir>
+        <dir name="renderer">
+          <file name="sfOptionsForm.class.php" role="data"/>
+          <file name="sfSlideshowOptionsForm.class.php" role="data"/>
+          <file name="SlideshowJQueryCycleRendererOptionsForm.class.php" role="data"/>
+        </dir>
+      </dir>
+      <dir name="model">
+        <dir name="doctrine">
+          <file name="PluginSlide.class.php" role="data"/>
+          <file name="PluginSlideshow.class.php" role="data"/>
+          <file name="PluginSlideshowSlide.class.php" role="data"/>
+          <file name="PluginSlideshowSlideTable.class.php" role="data"/>
+          <file name="PluginSlideshowTable.class.php" role="data"/>
+          <file name="PluginSlideTable.class.php" role="data"/>
+        </dir>
+      </dir>
+      <dir name="renderer">
+        <file name="BaseSlideshowRenderer.class.php" role="data"/>
+        <file name="SlideshowGoogleSlideshow2Renderer.class.php" role="data"/>
+        <file name="SlideshowJQueryCycleRenderer.class.php" role="data"/>
+        <file name="SlideshowProRenderer.class.php" role="data"/>
+        <file name="SlideshowRendererInterface.class.php" role="data"/>
+      </dir>
+      <dir name="validator">
+        <file name="sfValidatorSortableList.class.php" role="data"/>
+      </dir>
+      <dir name="widget">
+        <file name="sfWidgetFormJQuerySortableList.class.php" role="data"/>
+        <file name="sfWidgetFormJQuerySortableListMany.class.php" role="data"/>
+      </dir>
     </dir>
-   </dir>
-   <dir name="lib">
-		<dir name="filter">	
-			<dir name="doctrine">
-     		<file role="data" name="PluginSlideshowFormFilter.class.php" />
-     		<file role="data" name="PluginSlideFormFilter.class.php" />
-    	</dir>
+    <file name="LICENSE" role="data"/>
+    <dir name="modules">
+      <dir name="csSlideshow">
+        <dir name="actions">
+          <file name="components.class.php" role="data"/>
+        </dir>
+        <dir name="templates">
+          <file name="_slide.php" role="data"/>
+          <file name="_slideshow.php" role="data"/>
+          <file name="_slideshow_js.php" role="data"/>
+        </dir>
+      </dir>
+      <dir name="slide_admin">
+        <dir name="actions">
+          <file name="actions.class.php" role="data"/>
+        </dir>
+        <dir name="config">
+          <file name="generator.yml" role="data"/>
+        </dir>
+        <dir name="lib">
+          <file name="slide_adminGeneratorConfiguration.class.php" role="data"/>
+          <file name="slide_adminGeneratorHelper.class.php" role="data"/>
+        </dir>
+        <dir name="templates">
+          <file name="_thumbnail.php" role="data"/>
+        </dir>
+      </dir>
+      <dir name="slideshow_admin">
+        <dir name="actions">
+          <file name="actions.class.php" role="data"/>
+        </dir>
+        <dir name="config">
+          <file name="generator.yml" role="data"/>
+        </dir>
+        <dir name="lib">
+          <file name="slideshow_adminGeneratorConfiguration.class.php" role="data"/>
+          <file name="slideshow_adminGeneratorHelper.class.php" role="data"/>
+        </dir>
+        <dir name="templates">
+          <file name="_new_slide.php" role="data"/>
+          <file name="_slide_add_and_order.php" role="data"/>
+          <file name="_slide_order.php" role="data"/>
+        </dir>
+      </dir>
     </dir>
-		<dir name="form">	
-			<dir name="doctrine">
-     		<file role="data" name="PluginSlideshowForm.class.php" />
-     		<file role="data" name="PluginSlideForm.class.php" />
-    	</dir>
+    <file name="README" role="data"/>
+    <dir name="web">
+      <dir name="css">
+        <file name="google-slideshow.css" role="data"/>
+        <file name="slideshow-default.css" role="data"/>
+      </dir>
+      <dir name="images">
+        <file name="controller-back.png" role="data"/>
+        <file name="controller-first.gif" role="data"/>
+        <file name="controller-forward.png" role="data"/>
+        <file name="controller-last.gif" role="data"/>
+        <file name="controller-next.gif" role="data"/>
+        <file name="controller-pause.gif" role="data"/>
+        <file name="controller-pause.png" role="data"/>
+        <file name="controller-play.png" role="data"/>
+        <file name="controller-prev.gif" role="data"/>
+        <file name="controller.png" role="data"/>
+        <file name="frame.png" role="data"/>
+        <file name="loader-0.png" role="data"/>
+        <file name="loader-1.png" role="data"/>
+        <file name="loader-10.png" role="data"/>
+        <file name="loader-11.png" role="data"/>
+        <file name="loader-2.png" role="data"/>
+        <file name="loader-3.png" role="data"/>
+        <file name="loader-4.png" role="data"/>
+        <file name="loader-5.png" role="data"/>
+        <file name="loader-6.png" role="data"/>
+        <file name="loader-7.png" role="data"/>
+        <file name="loader-8.png" role="data"/>
+        <file name="loader-9.png" role="data"/>
+        <file name="thumbnails-a.png" role="data"/>
+        <file name="thumbnails-b.png" role="data"/>
+        <file name="thumbnails-frame.png" role="data"/>
+      </dir>
+      <dir name="js">
+        <file name="jquery.cycle.all.min.js" role="data"/>
+        <file name="mootools.js" role="data"/>
+        <file name="slideshow.min.js" role="data"/>
+      </dir>
     </dir>
-		<dir name="model">	
-			<dir name="doctrine">
-				<file role="data" name="PluginSlide.class.php" />
-     		<file role="data" name="PluginSlideshowTable.class.php" />
-     		<file role="data" name="PluginSlideshow.class.php" />
-     		<file role="data" name="PluginSlideTable.class.php" />
-    	</dir>
-    </dir>
-   </dir>
-	  <dir name="modules">
-	   <!-- model classes -->
-	  	<dir name="csSlideshow">
-	   		<dir name="actions">
-					<file role="data" name="components.class.php" />
-				</dir>
-	   		<dir name="templates">
-					<file role="data" name="_slide.php" />
-					<file role="data" name="_slideshow.php" />
-					<file role="data" name="_slideshow_js.php" />
-				</dir>			
-			</dir>
-	  </dir>
-	  <dir name="web">
-	  	<dir name="css">
-				<file role="data" name="slideshow-default.css" />
-			</dir>		
-			<dir name="images">
-				<file role="data" name="controller-back.png" />
-				<file role="data" name="controller-forward.png" />
-				<file role="data" name="controller-pause.png" />
-				<file role="data" name="controller-play.png" />			
-			</dir>
-	  	<dir name="js">
-				<file role="data" name="jquery.cycle.all.min.js" />
-			</dir>		
-		</dir>
   </dir>
  </contents>
+
  <dependencies>
   <required>
    <php>
@@ -96,26 +183,47 @@
     <name>symfony</name>
     <channel>pear.symfony-project.com</channel>
     <min>1.1.0</min>
-    <max>1.2.0</max>
+    <max>1.3.0</max>
+    <exclude>1.3.0</exclude>
    </package>
   </required>
  </dependencies>
- <phprelease />
+
+ <phprelease>
+ </phprelease>
+
  <changelog>
-  <release>
-   <version>
-    <release>1.0.0</release>
-    <api>1.0.0</api>
-   </version>
-   <stability>
-    <release>stable</release>
-    <api>stable</api>
-   </stability>
-   <date>2009-04-24</date>
-   <license uri="http://www.symfony-project.org/license">MIT license</license>
-   <notes>
-   * Initial creation of plugin
-   </notes>
-  </release>
+   <release>
+    <version>
+     <release>1.0.0</release>
+     <api>1.0.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2009-04-24</date>
+    <license uri="http://www.symfony-project.org/license">MIT license</license>
+    <notes>
+    * Initial creation of plugin
+    </notes>
+   </release>
+   <release>
+    <version>
+     <release>1.1.0</release>
+     <api>1.1.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2009-04-24</date>
+    <license uri="http://www.symfony-project.org/license">MIT license</license>
+    <notes>
+    * Adds system for rendering, many-to-many relationship between Slideshow and Slides, 
+      Google Slideshow2 support, admin modules for slideshows and slides, and widget 
+      for sorting slides
+    </notes>
+   </release>
  </changelog>
 </package>
