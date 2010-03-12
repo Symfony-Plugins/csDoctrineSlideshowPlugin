@@ -3,13 +3,13 @@
 /**
 * 
 */
-class sfValidatorSortableList extends sfValidatorDoctrineChoiceMany
+class sfValidatorSortableList extends sfValidatorDoctrineChoice
 {
   protected function configure($options = array(), $messages = array())
   {
-
     $this->addOption('position_field', 'position');
     parent::configure($options, $messages);
+    $this->setOption('multiple', true);
   }
   
   protected function doClean($value)

@@ -13,5 +13,4 @@ require_once dirname(__FILE__).'/../lib/slideshow_adminGeneratorHelper.class.php
  */
 class slideshow_adminActions extends autoSlideshow_adminActions
 {
-
 }

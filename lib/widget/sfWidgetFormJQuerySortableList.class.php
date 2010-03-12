@@ -21,7 +21,7 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
     $this->addOption('selected_list_id', 'selected_'.$table);
     $this->addOption('unselected_list_id', 'unselected_'.$table);
         
-    $this->addOption('choices', $this->getChoices($options)); 
+    $this->addOption('choices'); 
     
     // Parent options
     $this->addOption('class', 'sortable_list');
@@ -43,7 +43,7 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-    sfProjectConfiguration::getActive()->loadHelpers(array('Form', 'Javascript', 'Asset', 'Tag'));
+    sfProjectConfiguration::getActive()->loadHelpers(array('JavascriptBase', 'Asset', 'Tag'));
 
     // As this relation isn't added by the form framework, find the active primary keys
     if ($value == null) 
@@ -179,10 +179,10 @@ class sfWidgetFormJQuerySortableList extends sfWidgetFormSelectCheckbox
   }
   
   // Pulls default choices based on the passed options if none exist
-  protected function getChoices($options)
+  public function getChoices()
   {
-    return isset($options['choices']) ?  
-        $options['choices'] : $this->collectionToArray(
+    return $this->getOption('choices') ?  
+        $this->getOption('choices') : $this->collectionToArray(
             Doctrine::getTable($this->getOption('hasManyClass'))
               ->createQuery('a')
               ->orderBy($this->getOption('position_field'))

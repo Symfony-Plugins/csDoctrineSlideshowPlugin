@@ -21,10 +21,10 @@ class sfWidgetFormJQuerySortableListMany extends sfWidgetFormJQuerySortableList
   }
   
   // Pulls default choices based on the passed options if none exist
-  protected function getChoices($options)
+  public function getChoices()
   {
-    return isset($options['choices']) ?  
-        $options['choices'] : $this->collectionToArray(
+    return $this->getOption('choices') ?  
+        $this->getOption('choices') : $this->collectionToArray(
             Doctrine::getTable($this->getOption('hasManyClass'))
               ->createQuery('s')
               ->leftJoin('s.'.$this->getOption('refClass').' ref')
